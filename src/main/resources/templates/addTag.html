@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>添加标签</title>
+    <link rel="stylesheet" href="/static/css/sweetalert.css">
+    <script src="/static/js/jquery-1.11.0.min.js"></script>
+    <script src="/static/js/sweetalert-dev.js"></script>
+</head>
+<style>
+    .ipt {
+        height: 25px; /*设置按钮高度*/
+        font-size: 17px; /*设置字体大小*/
+    }
+
+    .btn {
+        width: 100px; /*设置按钮宽度*/
+        height: 30px; /*设置按钮高度*/
+        color: white; /*字体颜色*/
+        background-color: cornflowerblue; /*按钮背景颜色*/
+        border-radius: 3px; /*让按钮变得圆滑一点*/
+        border-width: 0; /*消去按钮丑的边框*/
+        margin: 0;
+        outline: none; /*取消轮廓*/
+        font-family: KaiTi; /*字体设置为楷体*/
+        font-size: 17px; /*设置字体大小*/
+        text-align: center; /*字体居中*/
+        cursor: pointer; /*设置鼠标箭头手势*/
+    }
+
+    button:hover { /*鼠标移动时的颜色变化*/
+        background-color: yellowgreen;
+    }
+
+    .tagtag {
+        border: 1px solid #e6cbcb;
+        width: 70px;
+        padding: 5px;
+        color: royalblue;
+        margin: 12px;
+        text-align: center;
+        display: inline-block;
+        z-index: 1;
+    }
+
+    .tagtag:hover {
+        background-color: #b8c4ce;
+    }
+
+    .tagtag:hover .closeBtn {
+        display: block;
+    }
+
+    .closeBtn {
+        position: fixed;
+        margin-top: -35px;
+        margin-left: 65px;
+        margin-right: -44px;
+        font-size: 20px;
+        background-color: red;
+        border-radius: 10px;
+        width: 15px;
+        height: 15px;
+        line-height: 12px;
+        display: none;
+        color: white;
+        cursor: pointer;
+    }
+
+    .mainbox {
+        width: 53%;
+        margin: 100px auto;
+    }
+
+    .tagList {
+        margin-top: 20px;
+        border: 1px solid gold;
+    }
+</style>
+<body>
+<div class="mainbox">
+    <span>标签：</span>
+    <input class="ipt" type="text" name="tagName" id="tagName">
+    <button class="btn" onclick="addTag()">添加</button>
+    <div class="tagList">
+        <div class="tagtag" th:each="tag,tagStat:${tagList}">
+            <div th:text="${tag.tagName}"></div>
+            <a class="closeBtn" th:onclick="'delTag('+${tag.id}+',this)'">x</a>
+        </div>
+    </div>
+</div>
+
+
+</body>
+<script>
+    function addTag() {
+        const tag = $("#tagName").val();
+        let param = /[\u4e00-\u9fa5_a-zA-Z0-9]{1,4}/;
+        if (!param.test(tag)) {
+            swal("", "标签错误，标签只能是中文或英文，且不超过4个汉字", "error");
+            return false;
+        }
+        $.ajax({
+            type: "POST",
+            url: "/tag/addTag",
+            data: {"tag": tag},
+            dataType: "json",
+            success: function (data) {
+                if (data.success) {
+                    swal("", data.msg, "success");
+                    $("#tagName").val("");
+                    let html = "<div class=\"tagtag\">\n" +
+                        "    <div>" + tag + "</div>\n" +
+                        "    <a class=\"closeBtn\" onclick=\"delTag(" + data.data + ",this)\">x</a>\n" +
+                        "</div>";
+                    $(".tagList").append(html);
+                } else {
+                    swal("", data.msg, "error");
+                }
+            },
+            error: function () {
+            }
+        });
+    }
+
+    function delTag(id, that) {
+        $.ajax({
+            type: "POST",
+            url: "/tag/delTag",
+            data: {"id": id},
+            dataType: "json",
+            success: function (data) {
+                if (data.success) {
+                    swal("", data.info, "success");
+                    $(that).parent("div").remove();
+                    console.dir(that);
+                } else {
+                    swal("", data.info, "error");
+                }
+            },
+            error: function () {
+            }
+        });
+    }
+</script>
+</html>

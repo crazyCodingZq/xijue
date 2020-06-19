@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zq.xijue.mapper.SysUserMapper">
+    <resultMap id="BaseResultMap" type="com.zq.xijue.entity.SysUser">
+        <result column="id" property="id" jdbcType="BIGINT"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="mobile" property="mobile" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="vip_level" property="vipLevel" jdbcType="INTEGER"/>
+        <result column="vip_limit" property="vipLimit" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <select id="queryUserList" parameterType="com.zq.xijue.entity.SysUser" resultMap="BaseResultMap">
+        select id,name,mobile,vip_level,vip_limit from sys_user
+    </select>
+    <insert id="insert" parameterType="com.zq.xijue.entity.SysUser">
+    insert into sys_user (name,mobile,password)
+    values (#{name}, #{mobile},#{password})
+  </insert>
+    <insert id="insertSelective" parameterType="com.zq.xijue.entity.SysUser">
+        insert into sys_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+            <if test="userName != null">
+                user_name,
+            </if>
+            <if test="password != null">
+                password,
+            </if>
+            <if test="vipLevel != null">
+                vip_level,
+            </if>
+            <if test="vipLimit != null">
+                vip_limit,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="userName != null">
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="vipLevel != null">
+                #{vipLevel,jdbcType=INTEGER},
+            </if>
+            <if test="vipLimit != null">
+                #{vipLimit,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <select id="getUserByName" resultMap="BaseResultMap" parameterType="string">
+        select * from sys_user where name = #{userName}
+    </select>
+    <update id="update" parameterType="com.zq.xijue.entity.SysUser">
+        update sys_user
+        <set>
+            <if test="id != null">
+                id = #{id,jdbcType=BIGINT},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                password = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="vipLevel != null">
+                vip_level = #{vipLevel,jdbcType=INTEGER},
+            </if>
+            <if test="vipLimit != null">
+                vip_limit = #{vipLimit,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where mobile = #{mobile,jdbcType=VARCHAR}
+    </update>
+</mapper>

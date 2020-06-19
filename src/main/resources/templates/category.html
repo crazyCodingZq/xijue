@@ -1,0 +1,115 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>所有素材-夕觉素材网-PSD素材,矢量图库,高清图片,免费设计素材下载</title>
+    <meta name="keywords" content="矢量素材,PS素材,psd素材,ppt模板,视频素材,背景图片,字体下载,图片素材,素材下载,素材图库,免费素材"/>
+    <meta name="description"
+          content="夕觉素材网为您提供海量免费设计素材图片下载。鲸图网包含矢量图,PS素材,psd素材免费下载,艺术字体下载,节日素材,淘宝素材,ppt模板,婚纱相册模板,网页模板等设计素材下载,是您设计的好帮手！"/>
+    <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon"/>
+    <meta name="renderer" content="webkit">
+    <link href="/static/css/dstyle.css" rel="stylesheet" type="text/css">
+    <link href="/static/css/page.css" rel="stylesheet" type="text/css">
+    <script src="/static/js/jquery-1.11.0.min.js"></script>
+    <meta name="viewport" content="width=1800"/>
+</head>
+
+<body>
+<div th:replace="header :: header"/>
+<section class="ijtoo-pagebanner ijtoo-pagebanner-0">
+    <h3>所有素材</h3>
+</section>
+
+<div class="clearfix"></div>
+
+<section class="ijtoo-wrap ijtoo-mainlist">
+    <div class="clearfix"></div>
+    <section class="ijtoo-wrap ijtoo-locattr">
+        <div class="location">
+            <a href="">当前位置</a><em>></em><a href=""> 所有素材</a>
+            <em>></em><a href="">平面设计</a> <em>></em><a class="current">全部</a>
+            <!--
+            <div class="l_search">
+                <form action="/search" onsubmit="return searchBox2(this)" class="ijtooSrarchForm">
+                    <input type="hidden" name="k1" value="1">
+                    <input type="hidden" name="k2" value="0">
+                    <input type="hidden" name="cls" value="all">
+                    <input type="text" class="searchtext _t" placeholder="在当前栏目下搜索" value="" name="wd">
+                    <button type="submit" class="searchbtn"></button>
+                    <div class="clearfix"></div>
+                </form>
+            </div>-->
+        </div>
+        <div class="proattr">
+            <div class="attr-item level1">
+                <a th:each="cate,cateStat:${categoryList}"
+                   th:if="${cate.parentId == 0}"
+                   th:onclick="'queryCategory2('+${cate.id}+');changeClass(1,this);querySourceAll('+${cate.id}+');'"
+                   th:attr="data-cId=${cate.id}"
+                   th:text="${cate.categoryName}"></a>
+            </div>
+            <div class="clearfix"></div>
+            <div class="attr-item level2">
+                <a href="/source/toCategory?categoryId=" class="current" id="l2all">全部</a>
+                <a th:each="cate,cateStat:${categoryList}"
+                   th:if="${cate.parentId != 0}"
+                   th:onclick="'changeClass(2,this);querySourceAll('+${cate.id}+');'"
+                   th:attr="'c-id='+${cate.id}"
+                   th:text="${cate.categoryName}"></a>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </section>
+
+    <ul class="work-item">
+        <li class="item  category1 subcategory9 ">
+            <a target="_blank" href="">
+                <em class="item-types jtype1">单品</em>
+                <div class="imgbox">
+                    <img src="" alt="" class="ijtoo-bimg"
+                         width="255" height="">
+                </div>
+            </a>
+            <div class="infos">
+                <a target="_blank" href="">
+                    <div class="title">
+                        <i class="nothing"></i>
+                    </div>
+                </a>
+                <div class="attr">
+                    <span class="d"><em></em>2</span><span class="l"><em></em>1</span>
+                </div>
+            </div>
+        </li>
+    </ul>
+    <div class="clearfix"></div>
+    <div class="ijtoo-pageStyle">
+        <div id="pagination" class="pagination"></div>
+    </div>
+
+</section>
+
+
+<div class="clearfix"></div>
+<div th:replace="footer :: myfooter"/>
+
+<input type="hidden" th:value="${categoryId}" id="categoryId"/>
+<input type="hidden" th:value="${style}" id="style"/>
+<div class="member_notlogin">
+    <a href="http://wpa.qq.com/msgrd?v=3&uin=3397682929&site=qq&menu=yes" target="_blank">
+        <div class="qqimg"><span></span></div>
+
+        <div class="msg">有什么可以帮助您？<span></span></div>
+        <div class="animated-circles  js-animated-circles ">
+            <div class="circles c-4"></div>
+            <div class="circles c-5"></div>
+            <div class="circles c-6"></div>
+        </div>
+    </a>
+</div>
+<script src="/static/js/detail.js"></script>
+<script src="/static/js/page.js"></script>
+
+</body>
+</html>

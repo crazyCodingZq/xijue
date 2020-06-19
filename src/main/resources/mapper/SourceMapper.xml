@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zq.xijue.mapper.SourceMapper">
+    <resultMap id="BaseResultMap" type="com.zq.xijue.entity.Source">
+        <result column="id" property="id" jdbcType="BIGINT"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="category" property="category" jdbcType="VARCHAR"/>
+        <result column="img_url" property="imgUrl" jdbcType="VARCHAR"/>
+        <result column="img_downLoad_url" property="imgDownloadUrl" jdbcType="VARCHAR"/>
+        <result column="downLoad_times" property="downloadTimes" jdbcType="INTEGER"/>
+        <result column="view_times" property="viewTimes" jdbcType="INTEGER"/>
+        <result column="collect_times" property="collectTimes" jdbcType="INTEGER"/>
+        <result column="score" property="score" jdbcType="INTEGER"/>
+        <result column="software" property="software" jdbcType="VARCHAR"/>
+        <result column="suffix" property="suffix" jdbcType="VARCHAR"/>
+        <result column="size" property="size" jdbcType="BIGINT"/>
+        <result column="provider" property="provider" jdbcType="VARCHAR"/>
+        <result column="portraiture" property="portraiture" jdbcType="VARCHAR"/>
+        <result column="source_desc" property="sourceDesc" jdbcType="VARCHAR"/>
+        <result column="tag_name" property="tagName" jdbcType="VARCHAR"/>
+        <result column="source_style" property="sourceStyle" jdbcType="VARCHAR"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <insert id="insert" parameterType="com.zq.xijue.entity.Source">
+        insert into tbl_data_source (id, name, category,
+        img_url, img_downLoad_url, downLoad_times,
+        collect_times, score, software,
+        suffix, size, provider,
+        portraiture, source_desc,tag_name,source_style, create_date)
+        values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{category,jdbcType=VARCHAR},
+        #{imgUrl,jdbcType=VARCHAR}, #{imgDownloadUrl,jdbcType=VARCHAR}, #{downloadTimes,jdbcType=INTEGER},
+        #{collectTimes,jdbcType=INTEGER}, #{score,jdbcType=INTEGER}, #{software,jdbcType=VARCHAR},
+        #{suffix,jdbcType=VARCHAR}, #{size,jdbcType=BIGINT}, #{provider,jdbcType=VARCHAR},
+        #{portraiture,jdbcType=VARCHAR}, #{sourceDesc,jdbcType=VARCHAR},#{createDate,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.zq.xijue.entity.Source">
+        insert into tbl_data_source
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="category != null">
+                category,
+            </if>
+            <if test="imgUrl != null">
+                img_url,
+            </if>
+            <if test="imgDownloadUrl != null">
+                img_downLoad_url,
+            </if>
+            <if test="downloadTimes != null">
+                downLoad_times,
+            </if>
+            <if test="viewTimes != null">
+                view_times,
+            </if>
+            <if test="collectTimes != null">
+                collect_times,
+            </if>
+            <if test="score != null">
+                score,
+            </if>
+            <if test="software != null">
+                software,
+            </if>
+            <if test="suffix != null">
+                suffix,
+            </if>
+            <if test="size != null">
+                size,
+            </if>
+            <if test="provider != null">
+                provider,
+            </if>
+            <if test="portraiture != null">
+                portraiture,
+            </if>
+            <if test="sourceDesc != null">
+                source_desc,
+            </if>
+            <if test="tagName != null">
+                tag_name,
+            </if>
+            <if test="sourceStyle != null">
+                source_style,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="category != null">
+                #{category,jdbcType=VARCHAR},
+            </if>
+            <if test="imgUrl != null">
+                #{imgUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="imgDownloadUrl != null">
+                #{imgDownloadUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="downloadTimes != null">
+                #{downloadTimes,jdbcType=INTEGER},
+            </if>
+            <if test="viewTimes != null">
+                #{viewTimes,jdbcType=INTEGER},
+            </if>
+            <if test="collectTimes != null">
+                #{collectTimes,jdbcType=INTEGER},
+            </if>
+            <if test="score != null">
+                #{score,jdbcType=INTEGER},
+            </if>
+            <if test="software != null">
+                #{software,jdbcType=VARCHAR},
+            </if>
+            <if test="suffix != null">
+                #{suffix,jdbcType=VARCHAR},
+            </if>
+            <if test="size != null">
+                #{size,jdbcType=BIGINT},
+            </if>
+            <if test="provider != null">
+                #{provider,jdbcType=VARCHAR},
+            </if>
+            <if test="portraiture != null">
+                #{portraiture,jdbcType=VARCHAR},
+            </if>
+            <if test="sourceDesc != null">
+                #{sourceDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="tagName != null">
+                #{tagName,jdbcType=VARCHAR},
+            </if>
+            <if test="sourceStyle != null">
+                #{sourceStyle,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP}
+            </if>
+        </trim>
+    </insert>
+    <select id="querySourceById" resultMap="BaseResultMap" parameterType="string">
+        select id, name, category, img_url, downLoad_times,view_times, collect_times, score, software, suffix, size, provider, portraiture, source_desc,tag_name,source_style, create_date
+        from tbl_data_source where id=#{id}
+    </select>
+    <select id="querySourceByPid" resultMap="BaseResultMap" parameterType="string">
+        select id, name, category, img_url, downLoad_times,view_times, collect_times, score, software, suffix, size, provider, portraiture, source_desc,tag_name,source_style, create_date
+        from tbl_data_source where category=#{id}
+    </select>
+    <select id="lookingForLike" resultMap="BaseResultMap" parameterType="com.zq.xijue.entity.Source">
+        select id,name,img_url from tbl_data_source where source_style like #{sourceStyle} ORDER BY  RAND() limit 15
+    </select>
+    <select id="querySourcePage" resultMap="BaseResultMap" parameterType="com.zq.xijue.entity.Source">
+        select id, name, category, img_url, downLoad_times,view_times, collect_times, score, software, suffix, size,
+        provider,
+        portraiture, source_desc,tag_name,source_style, create_date
+        from tbl_data_source
+        <where>
+            <if test="category != null">
+                category = #{category}
+            </if>
+            <if test="sourceStyle != null">
+                AND source_style like #{sourceStyle}
+            </if>
+        </where>
+    </select>
+    <select id="querySourceDownLoadUrlById" resultMap="BaseResultMap" parameterType="string">
+        select img_downLoad_url from tbl_data_source where id=#{id}
+    </select>
+</mapper>

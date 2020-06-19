@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>平面矢量图，夕觉素材网-PSD素材,矢量图库,高清图片,免费设计素材下载</title>
+    <meta name="keywords" content="矢量，商业海报，AI，矢量素材，海报，海报模板，音乐节，音乐，摇滚，简约">
+    <meta name="description" content="夕觉素材是专注设计素材下载的网站,提供矢量，商业海报，AI，矢量素材，海报，海报模板，音乐节，音乐，摇滚，简约等素材下载服务!">
+    <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon">
+    <meta name="renderer" content="webkit">
+    <link rel="stylesheet" href="/static/css/dstyle.css">
+    <link rel="stylesheet" href="/static/css/sweetalert.css">
+    <script src="/static/js/jquery-1.11.0.min.js"></script>
+    <script src="/static/js/sweetalert-dev.js"></script>
+    <meta name="viewport" content="width=1800">
+    <script>
+        function setIcon(icon) {
+            icon = $.trim(icon);
+            icon = icon.toLowerCase();
+            if (icon == "会声会影") {
+                icon = "hshy";
+            }
+            if (icon == "其他") {
+                icon = "qt";
+            }
+            if (icon == "aep") {
+                icon = "ae";
+            }
+
+            var formatArray = ['psd', 'word', 'ae', 'mp4', 'hshy', 'prproj', 'wav', 'qt', 'cad', 'ppt', 'pptx', 'ai', 'cdr', 'excel', 'mp3', 'wps', '3dmax', 'sketchup'];
+            if (formatArray.indexOf(icon) < 0) {
+                icon = "qt";
+            }
+            $('.appic_view i').addClass("icon_" + icon);
+        }
+    </script>
+</head>
+
+<body>
+<div th:replace="header :: header"/>
+<div class="clearfix"></div>
+
+<section class="ijtoo-wrap-detail">
+    <div class="clearfix"></div>
+    <section class="ijtoo-locattr">
+        <div class="location"><a href="">当前位置</a><em>&gt;</em>
+            <a href="">所有素材</a><em>&gt;</em>
+            <a href="">平面设计</a><em>&gt;</em>
+            <a href="">海报</a>
+            <em>&gt;</em><a th:text="${source.name}"></a></div>
+    </section>
+
+    <div class="clearfix"></div>
+
+    <div class="ijtoo-page-detail">
+        <div class="pull-left mainbody">
+            <div class="theader">
+                <h1 class="pull-left" th:text="${source.name}"></h1>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="ijtoo-content ijtoo-sucai">
+                <img class="ijtoo-bimg-detail" th:src="${source.imgUrl}"/>
+            </div>
+        </div>
+        <div id="ijtoo-detailR" class="ijtoo-slideright slideright" style="transform:translateY(0)">
+            <div class="">
+                <div class="info-t1">
+                    <div class="design-userinfos">
+                        <div class="design-userhead" style="display: none"><img src=""></div>
+                        <div class="design-infotext"><strong><em th:text="${source.provider}"></em> 在 <em
+                                th:text="${#dates.format(source.createDate,'yyyy-MM-dd HH:mm:ss')}"></em> 上传</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-t2">
+                    <a href="javascript:;" onfocus="this.blur();" class="transition favor-btn favor_n"><i></i><span
+                            class="zq"></span><span class="zqs"></span></a>
+                    <a href="javascript:;" onfocus="this.blur();" th:onclick="'downloadSource('+${source.id}+')'"
+                       class="transition download download-btn"><p><span>立即下载</span><strong></strong>
+                    </p><i></i></a>
+                </div>
+
+                <div class="kt—vip">
+                    <p>开通 VIP会员 全站素材免费下载 </p>
+                </div>
+
+                <div class="info-t3">
+                    <div class="attr">
+                        <span class="d" th:text="${source.downloadTimes}"></span>
+                        <span class="split"></span>
+                        <span class="v" th:text="${source.viewTimes}"></span>
+                        <span class="split"></span>
+                        <span class="l" th:text="${source.collectTimes}"></span>
+                    </div>
+                </div>
+
+                <div class="info-t4">
+                    <ul>
+                        <li style="width: 100%" th:if="${source.score >= 80}">
+                            <div style="float: left">模板评分：<span class="star-5"></span></div>
+                        </li>
+                        <li style="width: 100%" th:if="${source.score >= 60} and ${source.score < 80}">
+                            <div style="float: left">模板评分：<span class="star-4"></span></div>
+                        </li>
+                        <li style="width: 100%" th:if="${source.score >= 40} and ${source.score < 60}">
+                            <div style="float: left">模板评分：<span class="star-3"></span></div>
+                        </li>
+                        <li style="width: 100%" th:if="${source.score >= 20} and ${source.score < 40}">
+                            <div style="float: left">模板评分：<span class="star-2"></span></div>
+                        </li>
+                        <li th:text="'软件：'+ ${source.software}"></li>
+                        <li th:text="'格式：'+ ${source.suffix}"></li>
+                        <li th:text="'大小：'+ ${source.size}"></li>
+                        <li th:text="'提供者：'+ ${source.provider}"></li>
+                        <li style="width: 100%" th:text="'肖像权：'+ ${source.portraiture}"></li>
+                    </ul>
+                    <div class="clearfix"></div>
+                    <div class="appic_view">
+                        <i class="icon"></i>
+                        <div class="vie" th:abbr="${source.suffix}"
+                             th:utext="'格式：'+${source.suffix}+'<br>版本：'+${source.software}+'<br>'">
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="info-t5" style="display:none">
+                    <div class="label-text">分享</div>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="info-t6">
+                    <div class="label-text">标签</div>
+                    <div id="sourceTags">
+                        <a th:each="tag:${tagArr}" th:text="${tag}"></a>
+                    </div>
+                </div>
+
+                <div class="info-t7">
+                    <p>夕觉素材站内所有涉及字体、图片、音频、视频由站内会员分享而来，鲸图网不拥有此类素材的版权；本站所有资源作为学习。</p>
+                </div>
+                <div class="info-t8">
+                    <a href="">侵权投诉</a>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+
+    <div class="clearfix"></div>
+
+    <div id="ijtoo-ylike" class="ijtoo-ylike">
+        <div class="titles">猜你喜欢</div>
+        <div class="hd">
+            <a class="next"><i></i></a>
+            <a class="prev"><i></i></a>
+        </div>
+        <div class="bd">
+            <div class="tempWrap" style="overflow:hidden; position:relative; width:1108px">
+                <ul class="work-item"
+                    style="width: 3878px; position: relative; overflow: hidden; padding: 0px; margin: 0px; left: -252.73px;">
+                    <li th:each="source,sStat:${likeList}" class="item  category1 " style="float: left; width: 255px;">
+                        <a target="_blank" th:href="'/source/toDetail?id='+${source.id}">
+                            <i class="noorg"></i> <em class="item-types jtype1">单品</em>
+                            <div class="imgbox"><img th:src="${source.imgUrl}" alt="" width="255" height=""></div>
+                        </a>
+                        <div class="infos">
+                            <a target="_blank" th:href="'/source/toDetail?id='+${source.id}">
+                                <div class="title" th:text="${source.name}"></div>
+                            </a>
+                            <div class="attr"><span class="d"><em></em>2</span><span class="l"><em></em>0</span></div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<div class="clearfix"></div>
+<div th:replace="footer :: myfooter"/>
+
+<div class="member_notlogin">
+    <a href="http://wpa.qq.com/msgrd?v=3&amp;uin=3397682929&amp;site=qq&amp;menu=yes" target="_blank">
+        <div class="qqimg"><span></span></div>
+
+        <div class="msg">有什么可以帮助您？<span></span></div>
+        <div class="animated-circles  js-animated-circles">
+            <div class="circles c-4"></div>
+            <div class="circles c-5"></div>
+            <div class="circles c-6"></div>
+        </div>
+    </a>
+</div>
+
+<script src="/static/js/detail.js"></script>
+<script src="/static/js/jquery.SuperSlide.2.1.1.js"></script>
+<script>
+    $(function () {
+        scroll_post();
+        jQuery(".ijtoo-ylike").slide({
+            titCell: ".hd ul",
+            mainCell: ".bd ul",
+            autoPage: true,
+            effect: "left",
+            autoPlay: true,
+            vis: 4,
+            pnLoop: true
+        });
+    });
+
+    function scroll_post() {
+        var d_scr_top = $('#ijtoo-detailR').offset().top - $('.header').outerHeight() - 2;
+        var d_height = $('#ijtoo-detailR').outerHeight();
+        var max_height = $('.ijtoo-page-detail').outerHeight();
+        $(window).scroll(function () {
+            var w_scr_top = $(window).scrollTop();
+            var t_height = w_scr_top - d_scr_top;
+            if (d_scr_top < w_scr_top) {
+                if ((d_height + t_height) <= max_height) {
+                    $('#ijtoo-detailR').attr('style', 'transform:translateY(' + t_height + 'px)');
+                } else {
+                    $('#ijtoo-detailR').attr('style', 'transform:translateY(' + (max_height - d_height) + 'px)');
+                }
+            } else {
+                $('#ijtoo-detailR').attr('style', 'transform:translateY(0)');
+            }
+        });
+    }
+
+    $(window).resize(function () {
+        scroll_post();
+    });
+    window.onload = function () {
+        scroll_post();
+
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!-- th:fragment 定义需要引入的代码块，该div包含的内容即为引用的公共内容 -->
+<div th:fragment="myfooter">
+    <footer class="footer" th:fragment="footer">
+        <div class="ijtoo-wrap">
+
+            <div class=" pull-left">
+                <div class="logos">
+                    <div class="imgs ijtoo-eleimg"></div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="footlink">
+                    <a href="/">版权声明</a><i></i><a href="/">关于我们</a><i></i><a
+                        href="/">联系我们</a><i></i><a href="/">服务协议</a><i></i> <a
+                        href="/">软件教程</a><i></i>
+                    <a href="/">常见问题</a><i></i>
+                    <a href="/" target="_blank">限免专区</a>
+
+                    <div class="clearfix"></div>
+                    <div class="linkfriends">
+
+                        <span>友情链接：</span><a href="http://www.sucaidao.com" target="_blank">素材岛</a><a
+                            href="http://www.element3ds.com/" target="_blank">微元素</a><a
+                            href="http://huaban.com/q3rprwmyah/"
+                            target="_blank">花瓣</a><a
+                            href="http://www.xy-share.com/" target="_blank">3D模型</a><a href="https://www.pptxok.com/"
+                                                                                       target="_blank">欧酷PPT</a><a
+                            href="https://www.biransign.com" target="_blank">标识设计</a><a href="http://www.tantupix.com"
+                                                                                        target="_blank">探图网</a><a
+                            href="http://www.7msj.com/" target="_blank">电商设计</a><a href="http://www.scnoob.com"
+                                                                                   target="_blank">菜鸟素材</a><a
+                            href="http://www.kuaipng.com" target="_blank">快图网</a><a href="http://www.peepic.com"
+                                                                                    target="_blank">皮图网</a><a
+                            href="https://www.sucaifu.com/" target="_blank">素材府</a><a href="http://www.desktx.net/"
+                                                                                      target="_blank">壁纸</a><a
+                            href="https://www.shehui123.cn/" target="_blank">设汇</a><a href="https://www.cnue4.com/"
+                                                                                      target="_blank">虚幻之家</a></div>
+                </div>
+
+                <div class="cpy">
+                    Copyright ©2015-2035 <a href="http://www.miitbeian.gov.cn/" target="_blank">滇ICP备17002959号-2</a>
+                    云南工商网监
+                    信用网站
+                </div>
+
+            </div>
+            <div class="sns-infos pull-right">
+                <div class="qrcodes"></div>
+                <div class="clearfix"></div>
+                <a href="#" class="qq"></a>
+            </div>
+            <div class="clearfix"></div>
+
+        </div>
+    </footer>
+    <div class="member_notlogin">
+        <a href="http://wpa.qq.com/msgrd?v=3&uin=123999931&site=qq&menu=yes" target="_blank">
+            <div class="qqimg"><span></span></div>
+
+            <div class="msg">有什么可以帮助您？<span></span></div>
+            <div class="animated-circles  js-animated-circles ">
+                <div class="circles c-4"></div>
+                <div class="circles c-5"></div>
+                <div class="circles c-6"></div>
+            </div>
+        </a>
+    </div>
+</div>
+<style>
+    .ijtoo-eleimg {
+        background: url(/static/images/header/logo.png) no-repeat no-repeat center/contain;
+    }
+</style>
+</html>

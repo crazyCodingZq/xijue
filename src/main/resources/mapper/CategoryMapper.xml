@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zq.xijue.mapper.CategoryMapper">
+    <resultMap id="BaseResultMap" type="com.zq.xijue.entity.Category">
+        <result column="id" property="id" jdbcType="BIGINT"/>
+        <result column="category_name" property="categoryName" jdbcType="VARCHAR"/>
+        <result column="parent_id" property="parentId" jdbcType="BIGINT"/>
+        <result column="order_num" property="orderNum" jdbcType="INTEGER"/>
+    </resultMap>
+    <insert id="insert" parameterType="com.zq.xijue.entity.Category">
+    insert into tbl_category (category_name, parent_id,order_num)
+    values (#{categoryName,jdbcType=VARCHAR}, #{parentId,jdbcType=BIGINT}, #{orderNum,jdbcType=INTEGER})
+  </insert>
+    <insert id="insertSelective" parameterType="com.zq.xijue.entity.Category">
+        insert into tbl_category
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="categoryName != null">
+                category_name,
+            </if>
+            <if test="parentId != null">
+                parent_id,
+            </if>
+            <if test="orderNum != null">
+                order_num,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="categoryName != null">
+                #{categoryName,jdbcType=VARCHAR},
+            </if>
+            <if test="parentId != null">
+                #{parentId,jdbcType=BIGINT},
+            </if>
+            <if test="orderNum != null">
+                #{orderNum,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <select id="queryCategoryList" resultMap="BaseResultMap" parameterType="string">
+        select * from tbl_category where 1=1
+        <if test="id != null">
+            and parent_id = #{id}
+        </if>
+    </select>
+</mapper>

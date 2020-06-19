@@ -1,0 +1,338 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>夕觉素材</title>
+    <meta name="keywords" content="矢量，商业海报，AI，矢量素材，海报，海报模板，音乐节，音乐，摇滚，简约">
+    <meta name="description" content="夕觉素材是专注设计素材下载的网站,提供矢量，商业海报，AI，矢量素材，海报，海报模板，音乐节，音乐，摇滚，简约等素材下载服务!">
+    <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=1800">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/swiper.css">
+    <script src="/static/js/jquery-1.11.0.min.js"></script>
+    <script src="/static/js/swiper.min.js"></script>
+    <script src="/static/js/jquery.smint.js"></script>
+</head>
+<body style="padding-bottom: 0px;">
+
+<div class="header">
+    <div class="logo">
+        <a href="http://ppt.office365.xin/"><img src="/static/images/header/logo.png"></a>
+    </div>
+</div>
+
+<div class="banner_box">
+    <div class="w1380">
+        <div class="header">
+            <div class="w1380">
+                <a href="http://ppt.office365.xin/" class="logo1">
+                    <img src="/static/images/header/logo.png" width="122" height="52"></a>
+                <div class="nav_menu">
+                    <h3>分类目录</h3>
+                    <ul>
+                        <li th:each="cate,cateStat:${categoryList}"
+                            th:if="${cate.parentId == 0}"
+                            th:class="'nav_ico_'+${cateStat.index+1}">
+                            <a th:href="'/source/toCategory?categoryId='+${cate.id}"
+                               th:text="${cate.categoryName}"><span></span></a></li>
+                    </ul>
+                </div>
+                <div class="sousuo">
+
+                </div>
+                <div class="integral_menu">
+                    <ul>
+                        <li><a href="http://ppt.office365.xin/">首页</a></li>
+                        <li><a href="/source/toCategory">所有素材</a></li>
+                        <li><a href="/vip" class="cz">VIP会员</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="c-banner">
+            <div class="banner">
+                <ul>
+                    <li><a href="/source/toCategory?categoryId=1"><img src="/static/images/202006/loop/1.jpg"></a></li>
+                    <li><a href="/source/toCategory?categoryId=2"><img src="/static/images/202006/loop/2.jpg"></a></li>
+                    <li><a href="/source/toCategory?categoryId=3"><img src="/static/images/202006/loop/3.jpg"></a></li>
+                    <li><a href="/source/toCategory?categoryId=4"><img src="/static/images/202006/loop/4.jpg"></a></li>
+                    <li><a href="/source/toCategory?categoryId=5"><img src="/static/images/202006/loop/5.jpg"></a></li>
+                </ul>
+            </div>
+            <div class="nexImg">
+                <img src="/static/images/index/nexImg.png"/>
+            </div>
+            <div class="preImg">
+                <img src="/static/images/index/preImg.png"/>
+            </div>
+            <div class="jumpBtn">
+                <ul>
+                    <li jumpImg="0"></li>
+                    <li jumpImg="1"></li>
+                    <li jumpImg="2"></li>
+                    <li jumpImg="3"></li>
+                    <li jumpImg="4"></li>
+                </ul>
+            </div>
+        </div>
+        <div class="yh_box">
+            <div class="yh w_dl">
+                <span hidden id="uName" th:text="${username}"/>
+                <a class="tx" style="background-image:url(/static/images/index/tx2.ico)"></a>
+                <div class="name" style="opacity: 0;height:10px">1</div>
+                <div class="numerical">Hi~欢迎来到夕觉素材</div>
+                <div class="button">
+                    <a class="grzx" href="/login" style="border: 1px solid #3aa1f4">登陆</a>
+                    <a class="sczp" href="/reg">注册</a>
+                </div>
+                <p>开通 VIP会员 全站素材免费下载</p>
+            </div>
+            <a class="ggt" style="width:265px;height: 60px;"><img src="/static/images/202006/ggt.jpg"></a>
+
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
+</div>
+
+<div class="ind_ggtu">
+    <div class="w1380">
+        <div class="swiper-containers">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <a href="/source/toCategory?categoryId=1" target="_blank">
+                        <img src="/static/images/202006/line/1.jpg"></a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="/source/toCategory?categoryId=2" target="_blank">
+                        <img src="/static/images/202006/line/2.jpg"></a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="/source/toCategory?categoryId=3" target="_blank">
+                        <img src="/static/images/202006/line/3.jpg"></a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="/source/toCategory?categoryId=4" target="_blank">
+                        <img src="/static/images/202006/line/4.jpg"></a>
+                </div>
+            </div>
+            <!-- Add Pagination -->
+        </div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+    </div>
+</div>
+
+<div class="ijtoo-block3">
+    <section class="w1380">
+        <div class="thead">
+            <h3>精选内容</h3>
+            <p>每日更新，获取最新内容</p>
+            <div class="navs">
+                <div class="bg"></div>
+                <ul>
+                    <li class="gl_hover"><a data-dirname="" href="javascript:;" class="more">PPT模板</a></li>
+                    <li><a data-dirname="" href="javascript:;" class="more">WORD模板</a></li>
+                    <li><a data-dirname="" href="javascript:;" class="more">EXCEL模板</a></li>
+                    <li><a data-dirname="" href="javascript:;" class="more">视频模板</a></li>
+                    <li><a data-dirname="" href="javascript:;" class="more">免扣元素</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="ijtoo-recommendblock">
+            <ul class="work-item" style="display: block;">
+                <li th:each="a,aStat:${one}" class="item indexitem_9 ">
+                    <a th:href="'/source/toDetail?id='+${a.id}">
+                        <img th:src="${a.imgUrl}" width="255">
+                    </a>
+                    <div class="infos">
+                        <a th:href="'/source/toDetail?id='+${a.id}">
+                            <div class="title" th:text="${a.name}"></div>
+                        </a>
+                        <div class="attr">
+                            <span class="d"><em></em>25</span><span class="v"><em></em>1174</span><span
+                                class="l"><em></em>4</span>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <ul class="work-item">
+                <li th:each="b,bStat:${two}" class="item indexitem_9 ">
+                    <a th:href="'/source/toDetail?id='+${b.id}">
+                        <img th:src="${b.imgUrl}" width="255">
+                    </a>
+                    <div class="infos">
+                        <a th:href="'/source/toDetail?id='+${b.id}">
+                            <div class="title" th:text="${b.name}"></div>
+                        </a>
+                        <div class="attr">
+                            <span class="d"><em></em>25</span><span class="v"><em></em>1174</span><span
+                                class="l"><em></em>4</span>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <ul class="work-item">
+                <li th:each="c,cStat:${three}" class="item indexitem_9 ">
+                    <a th:href="'/source/toDetail?id='+${c.id}">
+                        <img th:src="${c.imgUrl}" width="255">
+                    </a>
+                    <div class="infos">
+                        <a th:href="'/source/toDetail?id='+${c.id}">
+                            <div class="title" th:text="${c.name}"></div>
+                        </a>
+                        <div class="attr">
+                            <span class="d"><em></em>25</span><span class="v"><em></em>1174</span><span
+                                class="l"><em></em>4</span>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <ul class="work-item">
+                <li th:each="d,dStat:${four}" class="item indexitem_9 ">
+                    <a th:href="'/source/toDetail?id='+${d.id}">
+                        <img th:src="${d.imgUrl}" width="255">
+                    </a>
+                    <div class="infos">
+                        <a th:href="'/source/toDetail?id='+${d.id}">
+                            <div class="title" th:text="${d.name}"></div>
+                        </a>
+                        <div class="attr">
+                            <span class="d"><em></em>25</span><span class="v"><em></em>1174</span><span
+                                class="l"><em></em>4</span>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <ul class="work-item">
+                <li th:each="e,eStat:${five}" class="item indexitem_9 ">
+                    <a th:href="'/source/toDetail?id='+${e.id}">
+                        <img th:src="${e.imgUrl}" width="255">
+                    </a>
+                    <div class="infos">
+                        <a th:href="'/source/toDetail?id='+${e.id}">
+                            <div class="title" th:text="${e.name}"></div>
+                        </a>
+                        <div class="attr">
+                            <span class="d"><em></em>25</span><span class="v"><em></em>1174</span><span
+                                class="l"><em></em>4</span>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="moret"><a href="/source/toCategory">查看更多素材&gt;&gt;</a></div>
+    </section>
+    <div class="clearfix"></div>
+</div>
+
+<div class="ijtoo-block4">
+    <div class="w1380">
+        <div class="thead">
+            <h3>热门标签</h3>
+            <p>关注热点，紧贴设计趋势</p>
+        </div>
+        <div class="index_hot">
+            <ul th:each="tag,tagStat:${tagList}">
+                <li><a th:href="'/source/toCategory?style='+${tag.tagName}" target="_blank"
+                       th:text="${tag.tagName}"></a>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+<div class="ijtoo-block5">
+    <a style="background-image:url(/static/images/202006/footer.jpg)"></a>
+</div>
+<div th:replace="footer :: myfooter"/>
+<div class="member_notlogin">
+    <a href="http://wpa.qq.com/msgrd?v=3&amp;uin=3397682929&amp;site=qq&amp;menu=yes" target="_blank">
+        <div class="qqimg"><span></span></div>
+        <div class="msg">有什么可以帮助您？<span></span></div>
+        <div class="animated-circles  js-animated-circles">
+            <div class="circles c-4"></div>
+            <div class="circles c-5"></div>
+            <div class="circles c-6"></div>
+        </div>
+    </a>
+</div>
+<script src="/static/js/index.js"></script>
+
+<style>
+    body {
+        padding-bottom: 200px;
+    }
+
+    .xuanfuad {
+        height: 300px;
+        width: 100%;
+        z-index: 9999;
+        display: block;
+        position: fixed;
+        left: 0px;
+        bottom: 0px;
+    }
+
+    .xuanfuad a.mainlink {
+        display: block;
+        height: 300px;
+    }
+
+    .xuanfuad .w1380 {
+        position: relative;
+        height: 300px;
+        z-index: 99
+    }
+
+    .xuanfuad .w1380 span.closes {
+        width: 24px;
+        height: 24px;
+        text-align: center;
+        line-height: 20px;
+        -webkit-border-radius: 100px;
+        -moz-border-radius: 100px;
+        border-radius: 100px;
+        display: inline-block;
+        position: absolute;
+        cursor: pointer;
+        z-index: 99999;
+        top: 0px;
+        right: 0px;
+        font-size: 21px;
+    }
+
+    .xuanfuad .w1380 span.closes:hover {
+        color: #cc0000;
+    }
+</style>
+<div class="xuanfuad"
+     style="background: url(http://static.ijtoo.com/ijdata/banner/XN02.png) center center no-repeat; height: 300px; display: none;">
+    <a class="mainlink" href="" target="_blank">
+        <div class="w1380">
+            <span onclick="$('.xuanfuad').hide();return false;" class="closes">×</span>
+        </div>
+    </a>
+
+</div>
+<script>
+    $(function () {
+        setTimeout(function () {
+            $('body').css('padding-bottom', '0');
+            $('.xuanfuad').hide();
+            return false;
+        }, 5000);
+    });
+    const name = $("#uName").text();
+    if (name != "游客") {
+        $(".name").html(name);
+        $(".numerical").html("欢迎您~  " + name);
+        const html = '<a class="sczp" href="/logout">退出</a>';
+        $(".button").html(html);
+    }
+</script>
+</body>
+</html>

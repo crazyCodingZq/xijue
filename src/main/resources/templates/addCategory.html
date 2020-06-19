@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>分类管理</title>
+    <link rel="stylesheet" href="/static/css/sweetalert.css">
+    <link rel="stylesheet" href="/static/css/dstyle.css">
+    <script src="/static/js/jquery-1.11.0.min.js"></script>
+    <script src="/static/js/sweetalert-dev.js"></script>
+</head>
+<style>
+    .ipt {
+        height: 25px; /*设置按钮高度*/
+        font-size: 17px; /*设置字体大小*/
+    }
+
+    .btn {
+        width: 100px; /*设置按钮宽度*/
+        height: 30px; /*设置按钮高度*/
+        color: white; /*字体颜色*/
+        background-color: cornflowerblue; /*按钮背景颜色*/
+        border-radius: 3px; /*让按钮变得圆滑一点*/
+        border-width: 0; /*消去按钮丑的边框*/
+        margin: 0;
+        outline: none; /*取消轮廓*/
+        font-family: KaiTi; /*字体设置为楷体*/
+        font-size: 17px; /*设置字体大小*/
+        text-align: center; /*字体居中*/
+        cursor: pointer; /*设置鼠标箭头手势*/
+    }
+
+    button:hover { /*鼠标移动时的颜色变化*/
+        background-color: yellowgreen;
+    }
+
+    .mainbox {
+        width: 53%;
+        margin: 100px auto;
+    }
+
+</style>
+<body>
+<div class="mainbox">
+    <h1>分类管理</h1>
+    <span>一级分类：</span>
+    <input class="ipt" type="text" id="level1">
+    <span>排序：<span style="font-size: 12px;color: red">(数字越大顺序越靠后)</span></span>
+    <input class="ipt" type="text" id="level1_num" style="width: 50px;">
+    <button class="btn" onclick="addLevel1()">添加</button>
+    <br>
+    <div class="clearfix" style="margin-bottom: 10px;"></div>
+    <span>二级分类：</span>
+    <input class="ipt" type="text" id="level2">
+    <span>排序：<span style="font-size: 12px;color: red">(数字越大顺序越靠后)</span></span>
+    <input class="ipt" type="text" id="level2_num" style="width: 50px;">
+    <button class="btn" onclick="addLevel2()">添加</button>
+    <br>
+    <span style="font-size: 12px;color: red;">添加二级分类时，先点击下方一级分类，选中的一级分类文字是红色。添加二级分类，会在选中的一级分类下添加</span>
+    <div class="clearfix" style="margin-bottom: 40px;"></div>
+    <div class="cateList">
+        <div class="proattr">
+            <div class="attr-item level1">
+                <a th:each="cate,cateStat:${categoryList}"
+                   th:if="${cate.parentId == 0}"
+                   th:onclick="'queryCategory2('+${cate.id}+');changeClass(1,this);'"
+                   th:id="${cate.id}"
+                   th:text="${cate.categoryName}"></a>
+            </div>
+            <div class="clearfix" style="margin-bottom: 20px;"></div>
+            <div class="attr-item level2">
+                <a href="/source/toCategory?categoryId=" class="current" id="l2all">全部</a>
+                <a th:each="cate,cateStat:${categoryList}"
+                   th:if="${cate.parentId != 0}"
+                   onclick="changeClass(2,this);"
+                   th:text="${cate.categoryName}"></a>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+<script>
+    $(".level1").find("a").eq(0).attr("class", "current");
+
+    function queryCategory2(id) {
+        $("#l2all").attr("href", "/source/toCategory?categoryId=" + id);
+        $.ajax({
+            type: "POST",
+            url: "/category/queryCategoryList",
+            data: {"id": id},
+            dataType: "json",
+            success: function (data) {
+                if (data && data.success && data.data.length > 0) {
+                    let level2 = '<a href="" class="current">全部</a>';
+                    $.each(data.data, function (index, item) {
+                        level2 += '<a onclick="changeClass(2,this);querySourceAll(' + item.id + ')">' + item.categoryName + '</a>';
+                    });
+                    $('.proattr .level2').html(level2);
+                } else {
+                    $('.proattr .level2').html("");
+                }
+            }
+        });
+    }
+
+    function changeClass(a, that) {
+        if (a === 1) {
+            $('.proattr .level1 a').removeClass("current");
+        } else if (a === 2) {
+            $('.proattr .level2 a').removeClass("current");
+        }
+        $(that).attr("class", "current");
+    }
+
+    function addLevel1() {
+        let level1 = $("#level1").val().trim();
+        let level1_num = $("#level1_num").val().trim();
+        let param = /^100$|^(\d|[1-9]\d)$/;
+        if (!param.test(level1_num)) {
+            swal("", "排序值只能大于0且小于100", "error");
+            return false;
+        }
+        $.ajax({
+            type: "POST",
+            url: "/category/addCategory",
+            data: {"categoryName": level1, "orderNum": level1_num, "parentId": 0},
+            dataType: "json",
+            success: function (data) {
+                if (data.success) {
+                    swal({
+                            title: "",
+                            text: data.msg,
+                            type: "success",
+                            closeOnConfirm: false
+                        },
+                        function () {
+                            location.href = "/category/toCateMgmt";
+                        });
+                } else {
+                    swal("", data.msg, "error");
+                }
+            }
+        });
+    }
+
+    function addLevel2() {
+        let level2 = $("#level2").val().trim();
+        let level2_num = $("#level2_num").val().trim();
+        let param = /^100$|^(\d|[1-9]\d)$/;
+        if (!param.test(level2_num)) {
+            swal("", "排序值只能大于0且小于100", "error");
+            return false;
+        }
+        let pid = $(".level1 .current").attr("id");
+        $.ajax({
+            type: "POST",
+            url: "/category/addCategory",
+            data: {"categoryName": level2, "orderNum": level2_num, "parentId": pid},
+            dataType: "json",
+            success: function (data) {
+                if (data.success) {
+                    swal({
+                            title: "",
+                            text: data.msg,
+                            type: "success",
+                            closeOnConfirm: false
+                        },
+                        function () {
+                            location.href = "/category/toCateMgmt";
+                        });
+                } else {
+                    swal("", data.msg, "error");
+                }
+            }
+        });
+    }
+</script>
+</html>

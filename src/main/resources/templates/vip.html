@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>会员支付</title>
+    <meta name="keywords" content=""/>
+    <meta name="description" content=""/>
+    <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon"/>
+    <meta name="renderer" content="webkit">
+    <link href="/static/css/vstyle.css?d20181228" rel="stylesheet" type="text/css">
+    <script src="/static/js/jquery-1.11.0.min.js"></script>
+    <meta name="viewport" content="width=1800"/>
+    <link href="/static/css/member.css" rel="stylesheet" type="text/css">
+</head>
+<script>
+    if (name) {
+        const html = '欢迎：<a href="/login" class="dl">' + name + '</a><a class="zc" href="/logout">退出</a>';
+        $(".nicknames .paynlogin").text("开通账号：" + name);
+    }
+</script>
+<body>
+<div th:replace="header :: header"/>
+<div class="vippages">
+    <div class="nicknames">
+        <div class="paynlogin">
+        </div>
+    </div>
+    <style>
+        .listitems {
+            margin-left: 156px;
+        }
+
+        .listitemsjb strong {
+            font-size: 14px;
+            margin: 0;
+        }
+    </style>
+    <div class="lists">
+
+        <script>
+            window['defaultPrice'] = 198;
+            window['defaultItem'] = 3;
+        </script>
+        <div class="listitems " style="display: none;"><span class="x2"></span><strong>30</strong>元/月
+            <div class="sm">优惠多多体验不停歇</div>
+            <div class="tts">体验VIP</div>
+            <div class="tts2">（每日限下5个）</div>
+        </div>
+        <div class="listitems"><span class="x2"></span><strong>99</strong>元/季度
+            <div class="sm">先到先得快抢低价</div>
+            <div class="tts">抢先VIP</div>
+            <div class="tts2">（每日限下10个）</div>
+        </div>
+        <div class="listitems on tuijian"><span class="x1"></span><span class="x2"></span><strong>198</strong>元/半年
+            <div class="sm">低至每天只要1块1</div>
+            <div class="tts">惊喜VIP</div>
+            <div class="tts2">（每日限下载20个）</div>
+        </div>
+        <div class="listitems"><span class="x2"></span><strong>299</strong>元/全年
+            <div class="sm">海量下载全网搞定</div>
+            <div class="tts">至尊VIP</div>
+            <div class="tts2">（尊享高速随心所欲）</div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="payprices">
+        <div class="ptexts">
+            <div class="ptexts_hrs">
+                <div class="laborders">
+                    应付金额：<strong class="showsprices">￥<span id="priceshowtext"></span></strong>元
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="paybtns">
+        <button class="btnpay" data-u="7401" id="wxpayBtnPay">
+            <div class="payimgbor"><img src="/static/images/pay-wx.png"></div>
+        </button>
+        <button class="btnpay" data-u="7401" id="paypalBtnPay">
+            <div class="payimgbor"><img src="/static/images/pay-zfb.png"></div>
+        </button>
+
+        <p style="text-align:left;"><a target="_blank"
+                                       style="font-size:14px; padding-left:80px; color:#999; margin-top:20px;"
+                                       href="/protocol.html">支付即同意《夕觉素材会员-用户协议》</a>
+        <p style="font-size: 12px;padding-left:80px;color: #999;text-align: left;padding-right: 80px;">
+            温馨提示：网站设置防刷系统，请合理使用海量下载账号，如用户短时间内高频或大量下载可能会触发该系统，将暂时暂停账号下载功能，如有疑问请联系客服。</p>
+        </p>
+
+        <div style="display:block; overflow:hidden; height:0; width:0">
+            <form id="payqk" action="/alipay" method="post"><input type="hidden" name="jcode" id="jcode" value=""><input
+                    type="submit"></form>
+        </div>
+
+    </div>
+</div>
+
+<div class="wxpayclass paymkbg"></div>
+<div class="wxpayclass paymkWind">
+    <div id="wxPayQrcode"></div>
+    <div class="wxClose">&times;</div>
+    <p>￥<strong id="pricewx"></strong><br>请打开微信扫一扫进行付款</p>
+</div>
+
+<div class="clearfix"></div>
+<div th:replace="footer :: myfooter"/>
+<script src="/static/js/xijue.js"></script>
+<script src="/static/js/pay.js"></script>
+<script src="/static/js/detail.js"></script>
+<script>
+    $(function () {
+        $('.listitems').eq(window['defaultItem']).click();
+    });
+</script>
+</body>
+
+</html>

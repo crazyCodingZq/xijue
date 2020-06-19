@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>用户管理</title>
+    <link rel="stylesheet" href="/static/css/sweetalert.css">
+    <script src="/static/js/jquery-1.11.0.min.js"></script>
+    <script src="/static/js/sweetalert-dev.js"></script>
+    <script language="javascript" type="text/javascript" src="/static/js/My97DatePicker/WdatePicker.js"></script>
+</head>
+<style>
+    .smart-green {
+        margin-right: auto;
+        max-width: 600px;
+        padding: 30px 30px 20px 30px;
+        font: 14px Arial, Helvetica, sans-serif;
+        color: #666;
+        border-radius: 5px;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+    }
+
+    .smart-green h1 {
+        font: 24px "Trebuchet MS", Arial, Helvetica, sans-serif;
+        padding: 20px 0px 20px 40px;
+        display: block;
+        margin: -30px -30px 10px -30px;
+        color: #FFF;
+        background: #9DC45F;
+        text-shadow: 1px 1px 1px #949494;
+        border-radius: 5px 5px 0px 0px;
+        -webkit-border-radius: 5px 5px 0px 0px;
+        -moz-border-radius: 5px 5px 0px 0px;
+         border-bottom: 1px solid #89AF4C;
+    }
+
+    .smart-green h1 > span {
+         display: block;
+         font-size: 11px;
+        color: #FFF;
+    }
+
+    .smart-green label {
+        display: block;
+        margin: 0px 0px 5px;
+    }
+
+    .smart-green label > span {
+        float: left;
+        margin-top: 10px;
+        color: #5E5E5E;
+        width: 100px;
+    }
+
+    .smart-green input[type="text"], .smart-green input[type="email"],
+    .smart-green textarea, .smart-green select {
+        color: #555;
+        height: 30px;
+        line-height: 15px;
+        width: 200px;
+        padding: 0px 0px 0px 10px;
+        margin-top: 2px;
+        border: 1px solid #E5E5E5;
+        background: #FBFBFB;
+        outline: 0;
+        -webkit-box-shadow: inset 1px 1px 2px rgba(238, 238, 238, 0.2);
+        box-shadow: inset 1px 1px 2px rgba(238, 238, 238, 0.2);
+        font: normal 14px/14px Arial, Helvetica, sans-serif;
+    }
+
+    .smart-green .button {
+        background-color: #9DC45F;
+        border-radius: 5px;
+        -webkit-border-radius: 5px;
+        -moz-border-border-radius: 5px;
+        border: none;
+        padding: 10px 25px 10px 25px;
+        color: #FFF;
+        text-shadow: 1px 1px 1px #949494;
+    }
+
+    .smart-green .button:hover {
+        background-color: #80A24A;
+    }
+
+    .error-msg {
+        color: red;
+        margin-top: 10px;
+    }
+
+    .success-msg {
+        color: #80A24A;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    span.required:before {
+        content: '*';
+        color: red;
+        font-size: 150%;
+    }
+
+    .ipt {
+        height: 25px; /*设置按钮高度*/
+        font-size: 17px; /*设置字体大小*/
+    }
+
+    .btn {
+        width: 100px; /*设置按钮宽度*/
+        height: 30px; /*设置按钮高度*/
+        color: white; /*字体颜色*/
+        background-color: cornflowerblue; /*按钮背景颜色*/
+        border-radius: 3px; /*让按钮变得圆滑一点*/
+        border-width: 0; /*消去按钮丑的边框*/
+        margin: 0;
+        outline: none; /*取消轮廓*/
+        font-family: KaiTi; /*字体设置为楷体*/
+        font-size: 17px; /*设置字体大小*/
+        text-align: center; /*字体居中*/
+        cursor: pointer; /*设置鼠标箭头手势*/
+    }
+
+    button:hover { /*鼠标移动时的颜色变化*/
+        background-color: yellowgreen;
+    }
+
+    .mainbox {
+        width: 53%;
+        margin: 100px auto;
+    }
+
+    table {
+        border-collapse: collapse;
+        margin: 0 auto;
+        text-align: center;
+        width: 1001px;
+    }
+
+    table td, table th {
+        border: 1px solid #cad9ea;
+        color: #666;
+        height: 30px;
+        padding: 5px 10px;
+    }
+
+    table thead th {
+        background-color: #CCE8EB;
+        width: 100px;
+    }
+
+    table tr:nth-child(odd) {
+        background: #fff;
+    }
+
+    table tr:nth-child(even) {
+        background: #F5FAFA;
+    }
+
+    body {
+        margin: 0px;
+    }
+
+    .zhezhao {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        background: #000;
+        width: 100%;
+        height: 100%;
+        opacity: 0.9;
+    }
+
+    .tankuang {
+        position: relative;
+        background: #fff;
+        width: 400px;
+        height: 300px;
+        border-radius: 5px;
+        margin-left: 55px;
+        margin-top: 300px;
+    }
+
+    #header {
+        height: 40px;
+    }
+
+    #header-right {
+        position: absolute;
+        width: 25px;
+        height: 25px;
+        border-radius: 5px;
+        background: red;
+        color: #fff;
+        right: 5px;
+        top: 5px;
+        text-align: center;
+    }
+</style>
+<body>
+<div class="mainbox">
+    <h1>用户管理</h1>
+    <div class="userList">
+        <table>
+            <thead>
+            <th>No.</th>
+            <th>用户名</th>
+            <th>手机号</th>
+            <th>vip等级</th>
+            <th>vip过期时间</th>
+            <th style="width: 240px;">操作</th>
+            </thead>
+            <tr th:each="user,userStat:${userList}">
+                <td th:text="${user.id}"/>
+                <td th:text="${user.name}"/>
+                <td th:text="${user.mobile}"/>
+                <td th:text="${user.vipLevel}"/>
+                <td th:text="${#dates.format(user.vipLimit,'yyyy-MM-dd HH:mm:ss')}"/>
+                <td>
+                    <button class="btn" onclick="edit(this)">修改</button>
+                    <button class="btn" onclick="editPass(this)">修改密码</button>
+                </td>
+                <!--<td th:text="${memberStat.even}"/>
+                <td th:text="${memberStat.odd}"/>-->
+            </tr>
+        </table>
+    </div>
+    <div class="zhezhao" id='zhezhao'>
+        <div class="tankuang">
+            <div id="header">
+                <div id="header-right" onclick="hidder()">x</div>
+                <div class="smart-green">
+                    <label><span class="required">用户名称 :</span>
+                        <input id="name" type="text" name="name" required autocomplete="off"/>
+                        <div class="error-msg"></div>
+                    </label>
+                    <label><span class="required">手机号码 :</span>
+                        <input id="mobile" type="text" name="mobile" required autocomplete="off" readonly/>
+                        <div class="error-msg"></div>
+                    </label>
+                    <label><span class="required">vip等级 :</span>
+                        <input id="vipLevel" type="text" name="vipLevel" required autocomplete="off"/>
+                        <div class="error-msg"></div>
+                    </label>
+                    <label><span class="required">vip过期时间 :</span>
+                        <input class="Wdate" type="text" id="vipLimit" name="vipLimit" required autocomplete="off"
+                               onClick="WdatePicker({el:this,dateFmt:'yyyy-MM-dd HH:mm:ss'})">
+                        <div class="error-msg"></div>
+                    </label>
+                    <div class="success-msg"></div>
+                    <label><span>&nbsp;</span>
+                        <button class="button" value="保存" onclick="validUserForm()">保存</button>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    function validUserForm() {
+        const name = $("#name").val();
+        let param = /[\u4e00-\u9fa5_a-zA-Z0-9]{2,8}/;
+        if (!param.test(name)) {
+            swal("", "用户名错误，用户名只能是中文或英文，且不超过8个字符", "error");
+            return false;
+        }
+        const mobile = $("#mobile").val();
+        if (!checkPhone(mobile)) {
+            return false;
+        }
+        const viplevel = $("#vipLevel").val();
+        if (viplevel != "0" && viplevel != "1" && viplevel != "20") {
+            swal("", "vip等级只能等于0：非会员，1：限时会员，20：永久会员", "error");
+            return false;
+        }
+        $.ajax({
+            type: "POST",
+            url: "/updateUser",
+            data: {"name": name, "mobile": mobile, "vipLevel": viplevel, "vipLimit": $("#vipLimit").val()},
+            dataType: "json",
+            success: function (data) {
+                if (data.success) {
+                    swal("", data.msg, "success");
+                    document.getElementById('zhezhao').style.display = "none";
+                } else {
+                    swal("", data.msg, "error");
+                }
+            },
+            error: function () {
+            }
+        });
+    }
+
+    function checkPhone(phone) {
+        if (phone === '') {
+            swal("", "请输入手机号", "error");
+            return false;
+        }
+        let param = /^1[34578]\d{9}$/;
+        if (!param.test(phone)) {
+            swal("", "手机号码格式错误，请重新输入", "error");
+            return false;
+        }
+        return true;
+    }
+
+    const errorMsg = $("#errorMsg").val();
+    if (errorMsg) {
+        swal("", errorMsg, "error");
+    }
+    const successMsg = $("#successMsg").val();
+    if (successMsg) {
+        swal("", successMsg, "success");
+    }
+    document.getElementById('zhezhao').style.display = "none";
+
+    function edit(that) {
+        const obj = $(that).parent().parent().find("td");
+        document.getElementById('zhezhao').style.display = "";
+        $("#name").val(obj.eq(1).text())
+        $("#mobile").val(obj.eq(2).text())
+        $("#vipLevel").val(obj.eq(3).text())
+        $("#vipLimit").val(obj.eq(4).text())
+    }
+
+    function editPass(that) {
+        const mobile = $(that).parent().parent().find("td").eq(2).text();
+        swal({
+                title: "修改密码",
+                text: "请输入新密码：",
+                type: "input",
+                showCancelButton: true,
+                closeOnConfirm: false,
+                confirmButtonText: "确定",
+                cancelButtonText: "取消",
+                animation: "slide-from-top",
+                inputPlaceholder: "请输入新密码"
+            },
+            function (inputValue) {
+                if (inputValue === false) return false;
+                if (inputValue === "") {
+                    swal.showInputError("请输入新密码!");
+                    return false
+                }
+                let param = /^[a-zA-Z0-9]{6,12}$/;
+                if (!param.test(inputValue)) {
+                    swal.showInputError("密码必须包含字母和数组，且最少6位不超过12位!");
+                    return false;
+                }
+                $.ajax({
+                    type: "POST",
+                    url: "/updateUser",
+                    data: {"mobile": mobile, "password": inputValue},
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.success) {
+                            swal("", data.msg, "success");
+                        } else {
+                            swal("", data.msg, "error");
+                        }
+                    },
+                    error: function () {
+                    }
+                });
+            });
+    }
+
+    function hidder() {
+        document.getElementById('zhezhao').style.display = "none";
+    }
+</script>
+</html>

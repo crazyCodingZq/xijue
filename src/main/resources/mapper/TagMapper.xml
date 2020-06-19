@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zq.xijue.mapper.TagMapper">
+    <resultMap id="BaseResultMap" type="com.zq.xijue.entity.Tag">
+        <result column="id" property="id" jdbcType="BIGINT"/>
+        <result column="tag_name" property="tagName" jdbcType="VARCHAR"/>
+    </resultMap>
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.zq.xijue.entity.Tag">
+    insert into tbl_tag (tag_name)
+    values (#{tagName,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.zq.xijue.entity.Tag">
+        insert into tbl_tag
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="tagName != null">
+                tag_name,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="tagName != null">
+                #{tagName,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="queryTagList" resultMap="BaseResultMap">
+        select * from tbl_tag
+    </select>
+    <delete id="delTag" parameterType="string">
+        delete from tbl_tag where id = #{id}
+    </delete>
+    <select id="queryByName" resultMap="BaseResultMap" parameterType="string">
+        select * from tbl_tag
+        <where>
+            <if test="tagName != null">
+                tag_name = #{tagName}
+            </if>
+        </where>
+    </select>
+</mapper>

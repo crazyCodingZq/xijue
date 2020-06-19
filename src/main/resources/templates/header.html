@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!-- th:fragment 定义需要引入的代码块，该div包含的内容即为引用的公共内容 -->
+<div th:fragment="header">
+    <div class="header fix-div">
+        <div class="w1380">
+            <a href="http://ppt.office365.xin/" clsss="logo1"><img class="logo2" style="float: left;height: 40px"
+                                                                   src="/static/images/header/logo.png"></a>
+            <div class="nav_menu">
+                <h3>分类目录</h3>
+                <ul>
+                    <li th:each="cate,cateStat:${categoryList}"
+                        th:if="${cateStat.index < 10}"
+                        th:class="'nav_ico_'+${cateStat.index+1}">
+                        <a th:href="'/source/toCategory?categoryId='+${cate.id}"
+                           th:text="${cate.categoryName}"><span></span></a></li>
+                </ul>
+            </div>
+            <div class="sousuo">
+                <form action="/source/search" onsubmit="return dealSearch()">
+                    <div class="filter-box">
+                        <div class="filter-text">
+                            <input class="filter-title" type="text" readonly placeholder="所有素材"/>
+                            <i class="icon icon-filter-arrow"></i>
+                        </div>
+                        <select name="K1" style="display: none">
+                            <option value="0">所有素材</option>
+                            <option th:each="cate,cateStat:${categoryList}"
+                                    th:value="${cate.id}"
+                                    th:text="${cate.categoryName}"></option>
+                        </select>
+                        <ul class="filter-list"></ul>
+                    </div>
+
+                    <div class="inputSearch">
+                        <input type="hidden" name="categoryId" id="skpid">
+                        <input type="text" id="search_wd" value=""
+                               onfocus="if(this.value == defaultValue){this.value='';this.style.color='#333'}"
+                               onblur="if(this.value==''){this.value=defaultValue;this.style.color='#b8b8b8'}"
+                               style="color:#b8b8b8;" name="style" class="_t">
+                        <button type="submit" class="_b"></button>
+                    </div>
+                    <div class="clearfix"></div>
+                </form>
+            </div>
+            <div class="integral_menu">
+                <ul>
+                    <li><a href="/index">首页</a></li>
+                    <li><a href="/source/toCategory?categoryId=1">所有素材</a></li>
+                    <li><a href="/vip" class="cz">VIP会员</a></li>
+                </ul>
+            </div>
+            <span hidden id="uName" th:text="${username}"/>
+            <div class="heaedr_dl">
+                <a href="/login" class="dl">登录</a><a class="zc" href="/toRegister">注册</a>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+    <script>
+        const name = $("#uName").text();
+        if (name) {
+            const html = '欢迎：<a href="/login" class="dl">' + name + '</a><a class="zc" href="/logout">退出</a>';
+            $(".heaedr_dl").html(html);
+        }
+
+        function dealSearch() {
+            console.dir("aaa")
+            var search_wd = $('#search_wd').val();
+            search_wd = $.trim(search_wd);
+            if (search_wd != "") {
+                var ck = $.cookie('searchHistory');
+                var k = "";
+                if (typeof (ck) == "undefined") {
+                    k = search_wd;
+                } else {
+                    k = ck + "###" + search_wd;
+                }
+
+                $.cookie('searchHistory', k, {expires: 90, path: '/'});
+
+            } else {
+                return false;
+            }
+        }
+
+    </script>
+</div>
+</html>
