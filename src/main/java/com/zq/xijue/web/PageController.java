@@ -32,6 +32,9 @@ public class PageController {
     @Autowired
     public TagService tagService;
 
+    @Autowired
+    public SysConfig config;
+
     /**
      * 跳转到登陆成功页
      */
@@ -82,7 +85,6 @@ public class PageController {
         model.addAttribute("five", five);
         List<Category> list = categoryService.queryCategoryList(0 + "");
         // 图片链接
-        SysConfig config = new SysConfig();
         model.addAttribute("mainLoop1", config.getMainLoop1());
         model.addAttribute("mainLoop2", config.getMainLoop2());
         model.addAttribute("mainLoop3", config.getMainLoop3());
