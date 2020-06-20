@@ -22,6 +22,19 @@ public class SysConfig {
     private String vipYearText;
     private String vipLifeText;
 
+    private String mainLoop1;
+    private String mainLoop2;
+    private String mainLoop3;
+    private String mainLoop4;
+    private String mainLoop5;
+
+    private String mainBottom1;
+    private String mainBottom2;
+    private String mainBottom3;
+    private String mainBottom4;
+
+    private String loginBottom;
+
     @PostConstruct
     public void initVipInfo() {
         OrderConstant.vipMap.put(getVipSeasonPrice(), new Vip(getVipSeasonPrice(), getVipSeasonText(), 0));

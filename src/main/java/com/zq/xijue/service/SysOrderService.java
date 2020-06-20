@@ -39,7 +39,6 @@ public class SysOrderService {
         } else if (PAY_TYPE_WEPAY.equals(payType)) {
             order.setPayType(1);
         }
-
         order.setOrderPrice(vipType.getAmount());
         // 默认未支付0
         order.setStatus(0);

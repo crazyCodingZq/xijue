@@ -19,7 +19,7 @@
 
 <div class="header">
     <div class="logo">
-        <a href="http://ppt.office365.xin/"><img src="/static/images/header/logo.png"></a>
+        <a href="http://111.229.77.76:9009/index"><img src="/static/images/header/logo.png"></a>
     </div>
 </div>
 
@@ -27,7 +27,7 @@
     <div class="w1380">
         <div class="header">
             <div class="w1380">
-                <a href="http://ppt.office365.xin/" class="logo1">
+                <a href="http://111.229.77.76:9009/index" class="logo1">
                     <img src="/static/images/header/logo.png" width="122" height="52"></a>
                 <div class="nav_menu">
                     <h3>分类目录</h3>
@@ -44,7 +44,7 @@
                 </div>
                 <div class="integral_menu">
                     <ul>
-                        <li><a href="http://ppt.office365.xin/">首页</a></li>
+                        <li><a href="http://111.229.77.76:9009/index">首页</a></li>
                         <li><a href="/source/toCategory">所有素材</a></li>
                         <li><a href="/vip" class="cz">VIP会员</a></li>
                     </ul>
@@ -54,11 +54,11 @@
         <div class="c-banner">
             <div class="banner">
                 <ul>
-                    <li><a href="/source/toCategory?categoryId=1"><img src="/static/images/202006/loop/1.jpg"></a></li>
-                    <li><a href="/source/toCategory?categoryId=2"><img src="/static/images/202006/loop/2.jpg"></a></li>
-                    <li><a href="/source/toCategory?categoryId=3"><img src="/static/images/202006/loop/3.jpg"></a></li>
-                    <li><a href="/source/toCategory?categoryId=4"><img src="/static/images/202006/loop/4.jpg"></a></li>
-                    <li><a href="/source/toCategory?categoryId=5"><img src="/static/images/202006/loop/5.jpg"></a></li>
+                    <li><a th:href="${mainLoop1}"><img src="/static/images/202006/loop/1.jpg"></a></li>
+                    <li><a th:href="${mainLoop2}"><img src="/static/images/202006/loop/2.jpg"></a></li>
+                    <li><a th:href="${mainLoop3}"><img src="/static/images/202006/loop/3.jpg"></a></li>
+                    <li><a th:href="${mainLoop4}"><img src="/static/images/202006/loop/4.jpg"></a></li>
+                    <li><a th:href="${mainLoop5}"><img src="/static/images/202006/loop/5.jpg"></a></li>
                 </ul>
             </div>
             <div class="nexImg">
@@ -89,7 +89,8 @@
                 </div>
                 <p>开通 VIP会员 全站素材免费下载</p>
             </div>
-            <a class="ggt" style="width:265px;height: 60px;"><img src="/static/images/202006/ggt.jpg"></a>
+            <a class="ggt" style="width:265px;height: 60px;" th:href="${loginBottom}">
+                <img src="/static/images/202006/ggt.jpg"></a>
 
         </div>
         <div class="clearfix"></div>
@@ -102,19 +103,19 @@
         <div class="swiper-containers">
             <div class="swiper-wrapper">
                 <div class="swiper-slide">
-                    <a href="/source/toCategory?categoryId=1" target="_blank">
+                    <a th:href="${mainBottom1}" target="_blank">
                         <img src="/static/images/202006/line/1.jpg"></a>
                 </div>
                 <div class="swiper-slide">
-                    <a href="/source/toCategory?categoryId=2" target="_blank">
+                    <a th:href="${mainBottom2}" target="_blank">
                         <img src="/static/images/202006/line/2.jpg"></a>
                 </div>
                 <div class="swiper-slide">
-                    <a href="/source/toCategory?categoryId=3" target="_blank">
+                    <a th:href="${mainBottom3}" target="_blank">
                         <img src="/static/images/202006/line/3.jpg"></a>
                 </div>
                 <div class="swiper-slide">
-                    <a href="/source/toCategory?categoryId=4" target="_blank">
+                    <a th:href="${mainBottom4}" target="_blank">
                         <img src="/static/images/202006/line/4.jpg"></a>
                 </div>
             </div>

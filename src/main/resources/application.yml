@@ -13,7 +13,21 @@ sys:
     vipYearText: 夕觉素材年卡VIP
     vipLifePrice: 299
     vipLifeText: 夕觉素材终身VIP
-
+    #点击跳转到某一个分类，填/source/toCategory?categoryId=1
+    #点击跳转到具体某一个素材，填/source/toDetail?id=1
+    #首页主题轮播图
+    mainLoop1: /source/toCategory?categoryId=1
+    mainLoop2: /source/toCategory?categoryId=2
+    mainLoop3: /source/toCategory?categoryId=3
+    mainLoop4: /source/toCategory?categoryId=4
+    mainLoop5: /source/toCategory?categoryId=5
+    #轮播图下发4个图
+    mainBottom1: /source/toCategory?categoryId=1
+    mainBottom2: /source/toCategory?categoryId=2
+    mainBottom3: /source/toCategory?categoryId=3
+    mainBottom4: /source/toCategory?categoryId=4
+    #登录下方1个图
+    loginBottom: /source/toDetail?id=1
 spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
