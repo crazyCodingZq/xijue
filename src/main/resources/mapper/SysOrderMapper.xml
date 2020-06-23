@@ -88,6 +88,6 @@
         select * from tbl_order where order_code = #{orderCode}
     </select>
     <update id="updatePaymentState">
-        update tbl_order set status = 1,trace_order = #{traceCode} where order_code = #{orderCode}
+        update tbl_order set status = 1,trace_code = #{traceCode} where order_code = #{orderCode}
     </update>
 </mapper>

@@ -140,6 +140,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/index",
                         "/code/sms",
                         "/code/getVerifyCode",
+                        "/wxPay/notify",
                         "/checkCode", "/vip", "/").permitAll()
                 .antMatchers("/download/**").authenticated()
                 .anyRequest()

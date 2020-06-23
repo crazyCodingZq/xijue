@@ -8,7 +8,6 @@ import com.zq.xijue.entity.SysOrder;
 import com.zq.xijue.entity.SysUser;
 import com.zq.xijue.util.IpUtils;
 import com.zq.xijue.util.SnowflakeIdFactory;
-import jdk.nashorn.internal.ir.annotations.Reference;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -32,7 +31,8 @@ public class WxPayService {
     private final Logger logger = LoggerFactory.getLogger(WxPayService.class);
     @Autowired
     private SysUserService sysUserService;
-    @Reference
+
+    @Autowired
     private SysOrderService sysOrderService;
 
     @Autowired
@@ -104,83 +104,94 @@ public class WxPayService {
      */
     public String notify(String notifyStr) throws Exception {
         String xmlBack = "<xml><return_code><![CDATA[FAIL]]></return_code><return_msg><![CDATA[报文为空]]></return_msg></xml> ";
-        try {
-            // 转换成map
-            Map<String, String> resultMap = WXPayUtil.xmlToMap(notifyStr);
-            WXPay wxpayApp = new WXPay(wxPayAppConfig);
-            if (wxpayApp.isPayResultNotifySignatureValid(resultMap)) {
-                String returnCode = resultMap.get("return_code");  //状态
-                String outTradeNo = resultMap.get("out_trade_no");//商户订单号
-                logger.info("wepay notify method success；orderNo={}", outTradeNo);
-                String transactionId = resultMap.get("transaction_id");
-                if ("SUCCESS".equals(returnCode)) {
-                    if (StringUtils.isNotBlank(outTradeNo)) {
-                        // 更新订单状态
-                        SysOrder sysOrder = sysOrderService.queryOrderDetail(outTradeNo);
-                        SysUser sysUser = sysUserService.getByMobile(sysOrder.getUid());
-                        LocalDateTime now = LocalDateTime.now();
-                        if (sysOrder.getOrderType() == 0) {
-                            //季卡
-                            now.plusMonths(3);
-                        } else if (sysOrder.getOrderType() == 1) {
-                            //年卡
-                            now.plusYears(1);
-                        } else if (sysOrder.getOrderType() == 2) {
-                            //终身会员卡
-                            sysUser.setVipLevel(20);
-                        }
-                        Date date = Date.from(now.atZone(ZoneId.systemDefault()).toInstant());
-                        sysUser.setVipLimit(date);
-                        sysUserService.updateUser(sysUser);
-                        sysOrderService.updatePaymentState(outTradeNo, transactionId);
-                        logger.info("微信手机支付回调成功,订单号:{}", outTradeNo);
-                        xmlBack = "<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>";
-                    }
+        // 转换成map
+        Map<String, String> resultMap = WXPayUtil.xmlToMap(notifyStr);
+        StringBuffer sb = new StringBuffer();
+        for (String key : resultMap.keySet()) {
+            sb.append("{key=").append(key).append(";;;;value=").append(resultMap.get(key)).append("}====");
+        }
+        logger.info("notify map={}", sb.toString());
+        WXPay wxpayApp = new WXPay(wxPayAppConfig);
+        if (wxpayApp.isResponseSignatureValid(resultMap)) {
+            String returnCode = resultMap.get("return_code");  //状态
+            String outTradeNo = resultMap.get("out_trade_no");//商户订单号
+            logger.info("wepay notify method success；orderNo={}", outTradeNo);
+            String transactionId = resultMap.get("transaction_id");
+            if ("SUCCESS".equals(returnCode)) {
+                if (StringUtils.isNotBlank(outTradeNo)) {
+                    //微信返回订单支付成功，更新用户vip等级、vip过期时间。同时更新订单状态
+                    updateUserAndOrder(outTradeNo, transactionId);
+                    logger.info("微信手机支付回调成功,订单号:{}", outTradeNo);
+                    xmlBack = "<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>";
                 }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
         return xmlBack;
     }
 
-    public ResultVO queryWePayOrder(String orderNo) {
+    public ResultVO queryWePayOrder(String orderNo) throws Exception {
         Map<String, String> requestMap = new HashMap<>();
-        try {
-            WXPay wxpay = new WXPay(wxPayAppConfig);
-            requestMap.put("out_trade_no", orderNo);                          // 商户订单号
-            Map<String, String> responseMap = wxpay.orderQuery(requestMap);
-            //获取返回码
-            String returnCode = responseMap.get("return_code");
-            String returnMsg = responseMap.get("return_msg");
-            String errCodeDes = "";
-            String tradeStateDesc = "";
-            //若返回码为SUCCESS，则会返回一个result_code,再对该result_code进行判断
-            if ("SUCCESS".equals(returnCode)) {
-                String resultCode = responseMap.get("result_code");
-                errCodeDes = responseMap.get("err_code_des");
-                if ("SUCCESS".equals(resultCode)) {
-                    String tradeState = responseMap.get("trade_state");
-                    tradeStateDesc = responseMap.get("trade_state_desc");
-                    if ("SUCCESS".equals(tradeState)) {
-                        return new ResultVO(true, "支付成功");
-                    }
+        WXPay wxpay = new WXPay(wxPayAppConfig);
+        requestMap.put("out_trade_no", orderNo); // 商户订单号
+        logger.info("queryWePayOrder oderNo={}", orderNo);
+        Map<String, String> responseMap = wxpay.orderQuery(requestMap);
+        //获取返回码
+        String returnCode = responseMap.get("return_code");
+        String returnMsg = responseMap.get("return_msg");
+        String transactionId = responseMap.get("transaction_id");//微信支付订单号
+        String outTradeNo = responseMap.get("out_trade_no");//商户订单号
+        String errCodeDes = "";
+        String tradeStateDesc = "";
+        //若返回码为SUCCESS，则会返回一个result_code,再对该result_code进行判断
+        if ("SUCCESS".equals(returnCode)) {
+            String resultCode = responseMap.get("result_code");
+            errCodeDes = responseMap.get("err_code_des");
+            if ("SUCCESS".equals(resultCode)) {
+                String tradeState = responseMap.get("trade_state");
+                tradeStateDesc = responseMap.get("trade_state_desc");
+                if ("SUCCESS".equals(tradeState)) {
+                    //微信返回订单支付成功，更新用户vip等级、vip过期时间。同时更新订单状态
+                    updateUserAndOrder(outTradeNo, transactionId);
+                    return new ResultVO(true, "支付成功");
                 }
             }
-            if (!StringUtils.isEmpty(returnMsg)) {
-                logger.error("wepay unifiedOrder error,return_msg={}", returnMsg);
-            }
-            if (!StringUtils.isEmpty(errCodeDes)) {
-                logger.error("wepay unifiedOrder error,errCodeDes={}", errCodeDes);
-            }
-            if (!StringUtils.isEmpty(tradeStateDesc)) {
-                logger.error("wepay unifiedOrder error,tradeStateDesc={}", tradeStateDesc);
-            }
-            return new ResultVO(false, "系统错误");
-        } catch (Exception e) {
-            logger.error("订单号：{}，错误信息：{}", orderNo, e.getMessage());
-            return new ResultVO(false, "微信支付查询订单失败");
         }
+        if (!StringUtils.isEmpty(returnMsg)) {
+            logger.error("wepay unifiedOrder error,return_msg={}", returnMsg);
+        }
+        if (!StringUtils.isEmpty(errCodeDes)) {
+            logger.error("wepay unifiedOrder error,errCodeDes={}", errCodeDes);
+        }
+        if (!StringUtils.isEmpty(tradeStateDesc)) {
+            logger.error("wepay unifiedOrder error,tradeStateDesc={}", tradeStateDesc);
+        }
+        return new ResultVO(false, "系统错误");
+    }
+
+    /**
+     * 订单支付成功，更新用户vip等级和vip过期时间，并更新订单状态为已支付
+     */
+    private void updateUserAndOrder(String outTradeNo, String transactionId) {
+        // 更新订单状态
+        SysOrder sysOrder = sysOrderService.queryOrderDetail(outTradeNo);
+        SysUser sysUser = sysUserService.getByMobile(sysOrder.getUid());
+        LocalDateTime now = LocalDateTime.now();
+        if (sysOrder.getOrderType() == 0) {
+            //季卡
+            now = now.plusMonths(3);
+            sysUser.setVipLevel(1);
+        } else if (sysOrder.getOrderType() == 1) {
+            //年卡
+            now = now.plusYears(1);
+            sysUser.setVipLevel(1);
+        } else if (sysOrder.getOrderType() == 2) {
+            //终身会员卡
+            sysUser.setVipLevel(20);
+        }
+        Date date = Date.from(now.atZone(ZoneId.systemDefault()).toInstant());
+        sysUser.setVipLimit(date);
+        sysUserService.updateUser(sysUser);
+        sysOrderService.updatePaymentState(outTradeNo, transactionId);
     }
 
     /**

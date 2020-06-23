@@ -115,18 +115,35 @@ function wepay(orderNo) {
                 $('.paymkWind').addClass('paymkWindshow');
                 $('#wxPayQrcode img').fadeIn(1000);
                 $('.paymkWind p').addClass("s");
-
+                let a = 0;
                 tq = setInterval(function () {
-                    $.post("/order/queryOrderStatus", "id=" + orderNo, function (data) {
-                        console.dir(data)
-                        if (data == 1) {
-                            clearInterval(tq);
-                            $('.paymkWind p.s').html("<strong>支付成功</strong><br>即将刷新页面");
-                            setTimeout(function () {
-                                location.reload();
-                            }, 2000);
+                    $.ajax({
+                        type: "POST",
+                        url: "/order/queryOrderStatus",
+                        data: {"orderNo": orderNo, "a": a},
+                        dataType: "json",
+                        success: function (data) {
+                            a = a + 1;
+                            if (data.success) {
+                                clearInterval(tq);
+                                $('.paymkWind p.s').html("<strong>支付成功</strong><br>页面即将跳转");
+                                setTimeout(function () {
+                                    //location.reload();
+                                    window.history.go(-1);
+                                }, 3000);
+                            }
                         }
                     });
+                    // $.post("/order/queryOrderStatus", "orderNo=" + orderNo + "&a=" + a, function (data) {
+                    //     console.dir(data)
+                    //     if (data == 1) {
+                    //         clearInterval(tq);
+                    //         $('.paymkWind p.s').html("<strong>支付成功</strong><br>即将刷新页面");
+                    //         setTimeout(function () {
+                    //             location.reload();
+                    //         }, 2000);
+                    //     }
+                    // });
                 }, 1000);
 
             })

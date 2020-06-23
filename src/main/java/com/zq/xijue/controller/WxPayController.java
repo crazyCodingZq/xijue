@@ -95,9 +95,13 @@ public class WxPayController {
      */
     @RequestMapping(value = "/queryWePayOrder", method = RequestMethod.POST)
     public ResultVO queryWePayOrder(String orderNo) {
-        logger.info("wepay queryWePayOrder method success");
-        ResultVO resultVO = wxPayService.queryWePayOrder(orderNo);
-        return resultVO;
+        try {
+            ResultVO resultVO = wxPayService.queryWePayOrder(orderNo);
+            return resultVO;
+        } catch (Exception e) {
+            logger.error("订单号：{}，错误信息：{}", orderNo, e.getMessage());
+            return new ResultVO(false, "微信支付查询订单失败");
+        }
     }
 
     /**

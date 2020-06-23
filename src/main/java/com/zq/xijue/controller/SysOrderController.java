@@ -4,6 +4,7 @@ import com.zq.xijue.constant.OrderConstant;
 import com.zq.xijue.core.ResultVO;
 import com.zq.xijue.entity.SysOrder;
 import com.zq.xijue.service.SysOrderService;
+import com.zq.xijue.service.WxPayService;
 import com.zq.xijue.util.SysConfig;
 import com.zq.xijue.util.UserUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -25,6 +26,8 @@ public class SysOrderController {
     private final Logger logger = LoggerFactory.getLogger(SysOrderService.class);
     @Autowired
     private SysOrderService sysOrderService;
+    @Autowired
+    private WxPayService wxPayService;
 
     /**
      * 创建订单，返回订单号
@@ -58,9 +61,15 @@ public class SysOrderController {
      */
     @ResponseBody
     @RequestMapping(value = "/queryOrderStatus", method = RequestMethod.POST)
-    public ResultVO queryOrderStatus(String orderNo) {
+    public ResultVO queryOrderStatus(String orderNo, int a) {
         try {
             SysOrder sysOrder = sysOrderService.queryOrderDetail(orderNo);
+            if (sysOrder == null) {
+                return new ResultVO(false, "");
+            }
+            if (a % 4 == 0) {
+                wxPayService.queryWePayOrder(orderNo);
+            }
             if (sysOrder.getStatus() == 1) {
                 return new ResultVO(true, "支付成功");
             } else {

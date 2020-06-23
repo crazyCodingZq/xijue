@@ -121,7 +121,7 @@ pay:
     #static/cert/wxpay/apiclient_cert.p12
     certPath:
     #微信支付成功的异步通知接口
-    payNotifyUrl: http://111.229.77.76:9009//wxPay/notify
+    payNotifyUrl: http://111.229.77.76:9009/wxPay/notify
 logging:
   file:
     path: c:\xijuesucai\logs

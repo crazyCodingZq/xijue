@@ -304,8 +304,8 @@ function downloadSource(id) {
             if (data.success) {
                 swal("下载地址", data.data, "success");
             } else if (data.code == 2001) {
-                // location.href = "/vip"
-                window.open("/vip", "_blank");
+                location.href = "/vip"
+                //window.open("/vip", "_blank");
             } else if (data.code == 2002) {
                 swal(data.msg);
             }
