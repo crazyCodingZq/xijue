@@ -106,11 +106,6 @@ public class WxPayService {
         String xmlBack = "<xml><return_code><![CDATA[FAIL]]></return_code><return_msg><![CDATA[报文为空]]></return_msg></xml> ";
         // 转换成map
         Map<String, String> resultMap = WXPayUtil.xmlToMap(notifyStr);
-        StringBuffer sb = new StringBuffer();
-        for (String key : resultMap.keySet()) {
-            sb.append("{key=").append(key).append(";;;;value=").append(resultMap.get(key)).append("}====");
-        }
-        logger.info("notify map={}", sb.toString());
         WXPay wxpayApp = new WXPay(wxPayAppConfig);
         if (wxpayApp.isResponseSignatureValid(resultMap)) {
             String returnCode = resultMap.get("return_code");  //状态
@@ -156,15 +151,7 @@ public class WxPayService {
                 }
             }
         }
-        if (!StringUtils.isEmpty(returnMsg)) {
-            logger.error("wepay unifiedOrder error,return_msg={}", returnMsg);
-        }
-        if (!StringUtils.isEmpty(errCodeDes)) {
-            logger.error("wepay unifiedOrder error,errCodeDes={}", errCodeDes);
-        }
-        if (!StringUtils.isEmpty(tradeStateDesc)) {
-            logger.error("wepay unifiedOrder error,tradeStateDesc={}", tradeStateDesc);
-        }
+        logger.info("订单{}还未支付;returnMsg=" + returnMsg + ";errCodeDes=" + errCodeDes + ";tradeStateDesc=" + tradeStateDesc, orderNo);
         return new ResultVO(false, "系统错误");
     }
 

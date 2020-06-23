@@ -64,7 +64,6 @@ $(function () {
                                 } else if (id == "wePay") {
                                     wepay(data.data);
                                 }
-
                             }
                         },
                         error: function (e) {
@@ -128,24 +127,12 @@ function wepay(orderNo) {
                                 clearInterval(tq);
                                 $('.paymkWind p.s').html("<strong>支付成功</strong><br>页面即将跳转");
                                 setTimeout(function () {
-                                    //location.reload();
                                     window.history.go(-1);
-                                }, 3000);
+                                }, 5000);
                             }
                         }
                     });
-                    // $.post("/order/queryOrderStatus", "orderNo=" + orderNo + "&a=" + a, function (data) {
-                    //     console.dir(data)
-                    //     if (data == 1) {
-                    //         clearInterval(tq);
-                    //         $('.paymkWind p.s').html("<strong>支付成功</strong><br>即将刷新页面");
-                    //         setTimeout(function () {
-                    //             location.reload();
-                    //         }, 2000);
-                    //     }
-                    // });
-                }, 1000);
-
+                }, 1500);
             })
         }
     });
